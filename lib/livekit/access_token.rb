@@ -50,12 +50,12 @@ module LiveKit
         raise ArgumentError, "VideoGrant is required"
       end
 
-      jwt_timestamp = Time.now.to_i
+      jwt_timestamp = Time.current.to_i
       payload = {}
       payload.merge!(@grants.to_hash)
       payload.merge!({
         exp: jwt_timestamp + @ttl,
-        nbf: jwt_timestamp - 5,
+        nbf: jwt_timestamp - 1000,
         iss: @api_key,
         sub: @identity,
       })
